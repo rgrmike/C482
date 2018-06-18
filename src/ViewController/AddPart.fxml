@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Add Part" />
+      <RadioButton layoutX="94.0" layoutY="14.0" mnemonicParsing="false" text="In-House" />
+      <RadioButton layoutX="213.0" layoutY="14.0" mnemonicParsing="false" text="Outsourced" />
+      <Button layoutX="366.0" layoutY="341.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="443.0" layoutY="341.0" mnemonicParsing="false" text="Cancel" />
+      <Label layoutX="110.0" layoutY="81.0" text="ID" />
+      <Label layoutX="102.0" layoutY="114.0" text="Name" />
+      <Label layoutX="104.0" layoutY="152.0" text="Inv" />
+      <Label layoutX="102.0" layoutY="200.0" text="Price/Cost" />
+      <Label layoutX="102.0" layoutY="249.0" text="Max" />
+      <Label layoutX="311.0" layoutY="249.0" text="Min" />
+      <Label layoutX="102.0" layoutY="280.0" text="Company Name" />
+      <Label layoutX="104.0" layoutY="310.0" text="Machine ID" />
+      <TextField editable="false" layoutX="165.0" layoutY="77.0" promptText="Auto Gen" />
+      <TextField layoutX="165.0" layoutY="110.0" promptText="Part Name" />
+      <TextField layoutX="165.0" layoutY="148.0" promptText="Inv" />
+      <TextField layoutX="165.0" layoutY="184.0" promptText="Price/Cost" />
+      <TextField layoutX="139.0" layoutY="245.0" promptText="Max" />
+      <TextField layoutX="346.0" layoutY="245.0" promptText="Min" />
+      <TextField layoutX="204.0" layoutY="276.0" promptText="Comp Nn" />
+      <TextField layoutX="204.0" layoutY="306.0" promptText="Machine ID" />
+   </children>
+</AnchorPane>
