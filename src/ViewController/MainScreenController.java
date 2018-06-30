@@ -24,7 +24,8 @@ import javafx.stage.Stage;
  * @author miken
  */
 public class MainScreenController implements Initializable {
-
+    public static int addmodpart;
+    public static int addmodprod;
     @FXML
     private TableColumn<?, ?> PartsPartIDCol;
     @FXML
@@ -73,7 +74,19 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    private void PartModifyButtonHandler(ActionEvent event) {
+    private void PartModifyButtonHandler(ActionEvent event) throws IOException{
+        //addmodpart 2 sets the form to modify
+        addmodpart=2;
+        Stage stage; 
+        Parent root;
+        //get reference to the button's stage         
+        stage=(Stage) PartsAddButton.getScene().getWindow();
+        //load up OTHER FXML document
+        root = FXMLLoader.load(getClass().getResource("AddPart.fxml"));
+        //create a new scene with root and set the stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -82,12 +95,14 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void PartsAddButtonHandler(ActionEvent event) throws IOException{
+        //addmodpart 1 sets the form to add
+        addmodpart=1;
         Stage stage; 
         Parent root;
         //get reference to the button's stage         
         stage=(Stage) PartsAddButton.getScene().getWindow();
         //load up OTHER FXML document
-        root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        root = FXMLLoader.load(getClass().getResource("AddPart.fxml"));
         //create a new scene with root and set the stage
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -104,7 +119,19 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    private void ProdModifyButtonHandler(ActionEvent event) {
+    private void ProdModifyButtonHandler(ActionEvent event) throws IOException{
+        //addmodpart 2 sets the form to modify
+        addmodprod=2;
+        Stage stage; 
+        Parent root;
+        //get reference to the button's stage         
+        stage=(Stage) PartsAddButton.getScene().getWindow();
+        //load up OTHER FXML document
+        root = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
+        //create a new scene with root and set the stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -112,7 +139,19 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    private void ProdAddButtonHandler(ActionEvent event) {
+    private void ProdAddButtonHandler(ActionEvent event) throws IOException{
+        //addmodpart 1 sets the form to add
+        addmodprod=1;
+        Stage stage; 
+        Parent root;
+        //get reference to the button's stage         
+        stage=(Stage) PartsAddButton.getScene().getWindow();
+        //load up OTHER FXML document
+        root = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
+        //create a new scene with root and set the stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
 }
