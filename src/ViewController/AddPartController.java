@@ -63,7 +63,13 @@ public class AddPartController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // If addmodpart = 1 then add - if it = 2 then modify
+        if(MainScreenController.addmodpart==2){
+            AddPartMainLabel.setText("Modify Parts");
+        }
+        if(MainScreenController.addmodpart==1){
+            AddPartMainLabel.setText("Add Parts");
+        }
     }    
 
     @FXML
