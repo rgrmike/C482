@@ -101,6 +101,11 @@ public class AddPartController implements Initializable {
 
     @FXML
     private void AddPartCancelButtonHandler(ActionEvent event) throws IOException{
+        String id=AddPartIDField.getText();
+        String name=AddPartNameField.getText();
+        String inv=AddPartInvField.getText();
+        String price=AddPartPriceField.getText();
+        String machine=AddPartMachineIDField.getText();
         Stage stage; 
         Parent root;
         //get reference to the button's stage         
