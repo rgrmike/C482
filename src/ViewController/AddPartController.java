@@ -20,6 +20,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 /**
  * FXML Controller class
  *
@@ -82,6 +86,7 @@ public class AddPartController implements Initializable {
 
     @FXML
     private void AddPartSaveButtonHandler(ActionEvent event) throws IOException{
+        
         Stage stage; 
         Parent root;
         //get reference to the button's stage         
