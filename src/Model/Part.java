@@ -14,40 +14,60 @@ import javafx.beans.property.*;
 abstract class Part {
     private final SimpleIntegerProperty PartID= new SimpleIntegerProperty(0);
     private final SimpleStringProperty PartName=new SimpleStringProperty("");
-    private final SimpleIntegerProperty PartInv= new SimpleIntegerProperty(0);
-    private final SimpleDoubleProperty Cost=new SimpleDoubleProperty(0.0);
+    private final SimpleDoubleProperty PartPrice=new SimpleDoubleProperty(0.0);
+    private final SimpleIntegerProperty PartInStock=new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty PartMin=new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty PartMax=new SimpleIntegerProperty(0);
     public Part(){
-        this(0,"",0,0.0);
+        this(0,"",0.0,0,0,0);
     }
-    public Part(int partID, String partName, int partInv,double cost){
+    public Part(int partID, String partName, double price, int inStock, int min, int max){
         setPartID(partID);
-        setPartName(partName);
-        setPartInv(partInv);
-        setCost(cost);
+        setName(partName);
+        setPrice(price);
+        setInStock(inStock);
+        setMin(min);
+        setMax(max);
     }
     public int getPartID(){
         return PartID.get();
     }
-    public String getPartName(){
+    public String getName(){
         return PartName.get();
     }
-    public String getPartInv(){
-        return PartName.get();
+    public double getPrice(){ 
+        return PartPrice.get();
     }
-    public double getCost(){ 
-        return Cost.get();
+    public int getInStock(){
+        return PartInStock.get();
+    }
+    public int getMin(){
+        return PartMin.get();
+    }
+    public int getMax(){
+        return PartMax.get();
     }
     public void setPartID(int partID){
         PartID.set(partID);
     }
-    public void setPartName(String partName){
+    public void setName(String partName){
         PartName.set(partName);
     }
-    public void setPartInv(int partInv){
-        PartInv.set(partInv);
+    public void setInStock(int inStock){
+        PartInStock.set(inStock);
     } 
-    public void setCost(double cost){
-        Cost.set(cost);
+    public void setPrice(double price){
+        PartPrice.set(price);
     }
+    public void setMin(int min){
+        PartMin.set(min);
+    }
+    public void setMax(int max){
+        PartMax.set(max);
+    }
+    
+    //check part input
+    //public static String PartCheck(String n)
+    
     
 }
