@@ -5,10 +5,28 @@
  */
 package Model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  *
  * @author mian
  */
-public class InhousePart {
+public class InhousePart extends Part {
     
+    private final SimpleIntegerProperty PartMachineID= new SimpleIntegerProperty(0);
+    public InhousePart(){
+        this(0);
+    }
+
+    public InhousePart(int machineID) {
+        setMachineID(machineID);
+    }
+    
+    public int getMachineID(){
+        return PartMachineID.get();
+    }
+    
+    public void setMachineID(int machineID) {
+        PartMachineID.set(machineID);
+    } 
 }
