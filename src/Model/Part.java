@@ -12,7 +12,7 @@ import javafx.beans.property.*;
  * @author mian
  */
 abstract class Part {
-    private final SimpleIntegerProperty PartID= new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty PartID=new SimpleIntegerProperty(0);
     private final SimpleStringProperty PartName=new SimpleStringProperty("");
     private final SimpleDoubleProperty PartPrice=new SimpleDoubleProperty(0.0);
     private final SimpleIntegerProperty PartInStock=new SimpleIntegerProperty(0);
