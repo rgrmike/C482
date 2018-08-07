@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewController.AddPartController">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewController.AddPartController">
    <children>
       <Label fx:id="AddPartMainLabel" layoutX="14.0" layoutY="14.0" text="Add Part" textFill="#0f1cd7">
          <font>
@@ -23,7 +23,6 @@
       <Label layoutX="50.0" layoutY="154.0" text="Price/Cost" />
       <Label layoutX="50.0" layoutY="182.0" text="Max" />
       <Label layoutX="222.0" layoutY="183.0" text="Min" />
-      <Label fx:id="AddPartCompNMLabel" disable="true" layoutX="50.0" layoutY="214.0" text="Company Name" />
       <Label fx:id="AddPartMachineIDLabel" layoutX="50.0" layoutY="214.0" text="Machine ID" />
       <TextField fx:id="AddPartIDField" editable="false" layoutX="150.0" layoutY="60.0" promptText="Auto Gen" />
       <TextField fx:id="AddPartNameField" layoutX="150.0" layoutY="90.0" promptText="Part Name" />
@@ -31,8 +30,6 @@
       <TextField fx:id="AddPartPriceField" layoutX="150.0" layoutY="150.0" promptText="Price/Cost" />
       <TextField fx:id="AddPartMaxField" layoutX="150.0" layoutY="180.0" prefHeight="25.0" prefWidth="64.0" promptText="Max" />
       <TextField fx:id="AddPartMinField" layoutX="250.0" layoutY="180.0" prefHeight="25.0" prefWidth="64.0" promptText="Min" />
-      <TextField fx:id="AddPartCompNmField" disable="true" layoutX="150.0" layoutY="211.0" promptText="Comp Nn" />
       <TextField fx:id="AddPartMachineIDField" layoutX="150.0" layoutY="211.0" promptText="Machine ID" />
    </children>
 </AnchorPane>
-
