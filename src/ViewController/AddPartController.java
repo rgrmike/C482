@@ -6,6 +6,7 @@
 package ViewController;
 
 import Model.InhousePart;
+import Model.OutsourcedPart;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -104,6 +105,8 @@ public class AddPartController implements Initializable {
         String min=AddPartMinField.getText();
         String inout=AddPartMachineIDField.getText();
         
+        
+        //add try to validate input for part
         if (inout == "Machine ID") {
             System.out.println("Outsourced Part name: " + name);
             InhousePart inhousePart = new InhousePart();
@@ -115,13 +118,22 @@ public class AddPartController implements Initializable {
             inhousePart.setMax(Integer.parseInt(max));
             inhousePart.setMin(Integer.parseInt(min));
             inhousePart.setMachineID(Integer.parseInt(inout));
-            //Inventory.addPart(inhousePart);
-            
-            
-            
-            
-            
+            //Inventory.addPart(inhousePart);    
         }
+        if (inout == "Company Name"){
+            System.out.println("In House Part name: " + name);
+            OutsourcedPart outPart = new OutsourcedPart();
+            //when we finish inventory set this to addModPartID
+            outPart.setPartID(Integer.parseInt(partID));
+            outPart.setName(name);
+            outPart.setInStock(Integer.parseInt(inv));
+            outPart.setPrice(Double.parseDouble(price));
+            outPart.setMax(Integer.parseInt(max));
+            outPart.setMin(Integer.parseInt(min));
+            outPart.setCompanyName(inout);
+            //Inventory.addPart(outPart); 
+        }
+        //add catch 
         
         
         Stage stage; 
@@ -134,6 +146,7 @@ public class AddPartController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
     }
 
     @FXML
