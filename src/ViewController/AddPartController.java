@@ -5,6 +5,7 @@
  */
 package ViewController;
 
+import Model.InhousePart;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,8 +43,6 @@ public class AddPartController implements Initializable {
     @FXML
     private Button AddPartCancelButton;
     @FXML
-    private Label AddPartCompNMLabel;
-    @FXML
     private Label AddPartMachineIDLabel;
     @FXML
     private TextField AddPartIDField;
@@ -58,9 +57,9 @@ public class AddPartController implements Initializable {
     @FXML
     private TextField AddPartMinField;
     @FXML
-    private TextField AddPartCompNmField;
-    @FXML
     private TextField AddPartMachineIDField;
+    //variable to populate partID field
+    private int addModPartID;
 
     /**
      * Initializes the controller class.
@@ -74,18 +73,56 @@ public class AddPartController implements Initializable {
         if(MainScreenController.addmodpart==1){
             AddPartMainLabel.setText("Add Parts");
         }
+        //addModPartID = Inventory.getPIDCt();
+        //AddPartIDField.setText(addModPartID);
     }    
-
+    
     @FXML
     private void AddPartInhouseRadioHandler(ActionEvent event) {
+        
+        AddPartMachineIDLabel.setText("Machine ID");
+        AddPartMachineIDField.setPromptText("Machine ID");
+        AddPartOutsourceRadio.setSelected(false);
     }
 
     @FXML
     private void AddPartOutsourceRadioHandler(ActionEvent event) {
+        
+        AddPartMachineIDLabel.setText("Company Name");
+        AddPartMachineIDField.setPromptText("Company Name");
+        AddPartInhouseRadio.setSelected(false);
     }
 
     @FXML
     private void AddPartSaveButtonHandler(ActionEvent event) throws IOException{
+        //remove partID when we finish inventory
+        String partID=AddPartIDField.getText();
+        String name=AddPartNameField.getText();
+        String inv=AddPartInvField.getText();
+        String price=AddPartPriceField.getText();
+        String max=AddPartMaxField.getText();
+        String min=AddPartMinField.getText();
+        String inout=AddPartMachineIDField.getText();
+        
+        if (inout == "Machine ID") {
+            System.out.println("Outsourced Part name: " + name);
+            InhousePart inhousePart = new InhousePart();
+            //when we finish inventory set this to addModPartID
+            inhousePart.setPartID(Integer.parseInt(partID));
+            inhousePart.setName(name);
+            inhousePart.setInStock(Integer.parseInt(inv));
+            inhousePart.setPrice(Double.parseDouble(price));
+            inhousePart.setMax(Integer.parseInt(max));
+            inhousePart.setMin(Integer.parseInt(min));
+            inhousePart.setMachineID(Integer.parseInt(inout));
+            //Inventory.addPart(inhousePart);
+            
+            
+            
+            
+            
+        }
+        
         
         Stage stage; 
         Parent root;
@@ -101,11 +138,7 @@ public class AddPartController implements Initializable {
 
     @FXML
     private void AddPartCancelButtonHandler(ActionEvent event) throws IOException{
-        String id=AddPartIDField.getText();
-        String name=AddPartNameField.getText();
-        String inv=AddPartInvField.getText();
-        String price=AddPartPriceField.getText();
-        String machine=AddPartMachineIDField.getText();
+        
         Stage stage; 
         Parent root;
         //get reference to the button's stage         
