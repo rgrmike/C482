@@ -66,8 +66,28 @@ abstract class Part {
         PartMax.set(max);
     }
     
-    //check part input
-    //public static String PartCheck(String n)
-    
-    
+    //Figure out why we threw a catch and check part input
+    public static String partCheck(String name, double price, int inStock, int min, int max, String errMsg){
+        
+        if (name == null){
+            errMsg = errMsg + " Name cannot be blank. ";
+        }
+        if (inStock < 1){
+            errMsg = errMsg + " Inventory cannot be less than 1. ";
+        }
+        if (price <= 0){
+            errMsg = errMsg + " Parts aren't free. Put in a price greater than 0, cheapskate!";
+        }
+        if (max < min){
+            errMsg = errMsg + " Max must be more than Min. ";
+        }
+        if (inStock < min){
+            errMsg = errMsg + " Inventory can't be less than min. ";
+        }
+        if (inStock > max){
+            errMsg = errMsg + " Inventory can't be more than max. ";
+        }
+        return errMsg;
+        
+    }
 }
