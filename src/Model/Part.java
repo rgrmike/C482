@@ -11,7 +11,7 @@ import javafx.beans.property.*;
  *
  * @author mian
  */
-abstract class Part {
+public abstract class Part {
     private final SimpleIntegerProperty PartID=new SimpleIntegerProperty(0);
     private final SimpleStringProperty PartName=new SimpleStringProperty("");
     private final SimpleDoubleProperty PartPrice=new SimpleDoubleProperty(0.0);
@@ -66,7 +66,7 @@ abstract class Part {
         PartMax.set(max);
     }
     
-    //Figure out why we threw a catch and check part input
+    //Check the part input and return what needs to be fixed
     public static String partCheck(String name, double price, int inStock, int min, int max, String errMsg){
         
         if (name == null){
