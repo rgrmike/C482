@@ -5,6 +5,7 @@
  */
 package ViewController;
 
+import Model.Part;
 import Model.InhousePart;
 import Model.OutsourcedPart;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -60,7 +62,11 @@ public class AddPartController implements Initializable {
     @FXML
     private TextField AddPartMachineIDField;
     //variable to populate partID field
+    
+    private String errMsg = new String();
+    private boolean inOrOut;
     private int addModPartID;
+    
 
     /**
      * Initializes the controller class.
@@ -80,7 +86,7 @@ public class AddPartController implements Initializable {
     
     @FXML
     private void AddPartInhouseRadioHandler(ActionEvent event) {
-        
+        inOrOut = false;
         AddPartMachineIDLabel.setText("Machine ID");
         AddPartMachineIDField.setPromptText("Machine ID");
         AddPartOutsourceRadio.setSelected(false);
@@ -88,7 +94,7 @@ public class AddPartController implements Initializable {
 
     @FXML
     private void AddPartOutsourceRadioHandler(ActionEvent event) {
-        
+        inOrOut = true;
         AddPartMachineIDLabel.setText("Company Name");
         AddPartMachineIDField.setPromptText("Company Name");
         AddPartInhouseRadio.setSelected(false);
@@ -97,44 +103,65 @@ public class AddPartController implements Initializable {
     @FXML
     private void AddPartSaveButtonHandler(ActionEvent event) throws IOException{
         //remove partID when we finish inventory
-        String partID=AddPartIDField.getText();
+        String textPartID=AddPartIDField.getText();
         String name=AddPartNameField.getText();
-        String inv=AddPartInvField.getText();
-        String price=AddPartPriceField.getText();
-        String max=AddPartMaxField.getText();
-        String min=AddPartMinField.getText();
+        String textInStock=AddPartInvField.getText();
+        String textPrice=AddPartPriceField.getText();
+        String textMax=AddPartMaxField.getText();
+        String textMin=AddPartMinField.getText();
         String inout=AddPartMachineIDField.getText();
         
         
-        //add try to validate input for part
-        if (inout == "Machine ID") {
-            System.out.println("Outsourced Part name: " + name);
-            InhousePart inhousePart = new InhousePart();
-            //when we finish inventory set this to addModPartID
-            inhousePart.setPartID(Integer.parseInt(partID));
-            inhousePart.setName(name);
-            inhousePart.setInStock(Integer.parseInt(inv));
-            inhousePart.setPrice(Double.parseDouble(price));
-            inhousePart.setMax(Integer.parseInt(max));
-            inhousePart.setMin(Integer.parseInt(min));
-            inhousePart.setMachineID(Integer.parseInt(inout));
-            //Inventory.addPart(inhousePart);    
-        }
-        if (inout == "Company Name"){
-            System.out.println("In House Part name: " + name);
-            OutsourcedPart outPart = new OutsourcedPart();
-            //when we finish inventory set this to addModPartID
-            outPart.setPartID(Integer.parseInt(partID));
-            outPart.setName(name);
-            outPart.setInStock(Integer.parseInt(inv));
-            outPart.setPrice(Double.parseDouble(price));
-            outPart.setMax(Integer.parseInt(max));
-            outPart.setMin(Integer.parseInt(min));
-            outPart.setCompanyName(inout);
-            //Inventory.addPart(outPart); 
-        }
-        //add catch 
+        try {
+            int partID=Integer.parseInt(textPartID);
+            int inStock=Integer.parseInt(textInStock);
+            double price=Double.parseDouble(textPrice);
+            int max=Integer.parseInt(textMax);
+            int min=Integer.parseInt(textMin);
         
+            errMsg = Part.partCheck(name, price, inStock, min, max, errMsg);
+            if (errMsg.length() > 0){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Bad Data Entry");
+                alert.setHeaderText("Error Adding Part");
+                alert.setContentText(errMsg);
+                alert.showAndWait();
+                //reset the errMsg variable for the next iteration
+                errMsg = "";
+            }
+            
+            if (inOrOut == false) {
+                InhousePart inhousePart = new InhousePart();
+                //when we finish inventory set this to addModPartID
+                inhousePart.setPartID(partID);
+                inhousePart.setName(name);
+                inhousePart.setInStock(inStock);
+                inhousePart.setPrice(price);
+                inhousePart.setMax(max);
+                inhousePart.setMin(min);
+                inhousePart.setMachineID(Integer.parseInt(inout));
+                //Inventory.addPart(inhousePart);    
+            }
+            if (inOrOut == true){
+                System.out.println("In House Part name: " + name);
+                OutsourcedPart outPart = new OutsourcedPart();
+                //when we finish inventory set this to addModPartID
+                outPart.setPartID(partID);
+                outPart.setName(name);
+                outPart.setInStock(inStock);
+                outPart.setPrice(price);
+                outPart.setMax(max);
+                outPart.setMin(min);
+                outPart.setCompanyName(inout);
+                //Inventory.addPart(outPart); 
+            }
+        } catch(NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Number Error");
+            alert.setContentText("Please enter a valid number.");
+            alert.showAndWait();
+        }        
         
         Stage stage; 
         Parent root;
