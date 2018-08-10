@@ -5,6 +5,19 @@
  */
 package ViewController;
 
+import Model.Part;
+import Model.Product;
+import Model.InhousePart;
+import Model.OutsourcedPart;
+import Model.Inventory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,9 +27,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * FXML Controller class
@@ -27,13 +40,13 @@ public class MainScreenController implements Initializable {
     public static int addmodpart;
     public static int addmodprod;
     @FXML
-    private TableColumn<?, ?> PartsPartIDCol;
+    private TableColumn<Part, Integer> PartsPartIDCol;
     @FXML
-    private TableColumn<?, ?> PartsPartNameCol;
+    private TableColumn<Part, String> PartsPartNameCol;
     @FXML
-    private TableColumn<?, ?> PartsInventoryCol;
+    private TableColumn<Part, Integer> PartsInventoryCol;
     @FXML
-    private TableColumn<?, ?> PartsPriceCol;
+    private TableColumn<Part, Double> PartsPriceCol;
     @FXML
     private Button PartSearchButton;
     @FXML
@@ -43,13 +56,13 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button PartsAddButton;
     @FXML
-    private TableColumn<?, ?> ProdProdIDCol;
+    private TableColumn<Product, Integer> ProdProdIDCol;
     @FXML
-    private TableColumn<?, ?> ProdNameCol;
+    private TableColumn<Product, String> ProdNameCol;
     @FXML
-    private TableColumn<?, ?> ProdInventoryCol;
+    private TableColumn<Product, Integer> ProdInventoryCol;
     @FXML
-    private TableColumn<?, ?> ProdPriceCol;
+    private TableColumn<Product, Double> ProdPriceCol;
     @FXML
     private Button MainExit;
     @FXML
@@ -66,7 +79,14 @@ public class MainScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        PartsPartIDCol.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
+        PartsPartNameCol.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
+        PartsInventoryCol.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
+        PartsPriceCol.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
+        ProdProdIDCol.setCellValueFactory(cellData -> cellData.getValue().prodIDProp().asObject());
+        ProdNameCol.setCellValueFactory(cellData -> cellData.getValue().prodNameProp());
+        ProdInventoryCol.setCellValueFactory(cellData -> cellData.getValue().prodInStockProp().asObject());
+        ProdPriceCol.setCellValueFactory(cellData -> cellData.getValue().prodPriceProp());
     }    
 
     @FXML
