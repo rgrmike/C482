@@ -86,7 +86,7 @@ public class MainScreenController implements Initializable {
         ProdProdIDCol.setCellValueFactory(cellData -> cellData.getValue().prodIDProp().asObject());
         ProdNameCol.setCellValueFactory(cellData -> cellData.getValue().prodNameProp());
         ProdInventoryCol.setCellValueFactory(cellData -> cellData.getValue().prodInStockProp().asObject());
-        ProdPriceCol.setCellValueFactory(cellData -> cellData.getValue().prodPriceProp());
+        ProdPriceCol.setCellValueFactory(cellData -> cellData.getValue().prodPriceProp().asObject());
     }    
 
     @FXML
