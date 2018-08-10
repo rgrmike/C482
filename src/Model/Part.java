@@ -29,6 +29,21 @@ public abstract class Part {
         setMin(min);
         setMax(max);
     }
+    //Creating return objects for the table within main so it does not throw an error about
+    //int cannot be derefrenced 
+    public IntegerProperty pIDProp(){
+        return PartID;
+    }
+    public StringProperty partNameProp(){
+        return PartName;
+    }
+    public IntegerProperty partInStockProp(){
+        return PartInStock;
+    }
+    public DoubleProperty partPriceProp(){
+        return PartPrice;
+    }
+    // Standard run of the mill getters...
     public int getPartID(){
         return PartID.get();
     }
@@ -47,6 +62,7 @@ public abstract class Part {
     public int getMax(){
         return PartMax.get();
     }
+    //standard setters
     public void setPartID(int partID){
         PartID.set(partID);
     }
