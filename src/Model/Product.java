@@ -5,11 +5,8 @@
  */
 package Model;
 
-import com.sun.javafx.collections.ObservableSequentialListWrapper;
 import java.util.ArrayList;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-
 /**
  *
  * @author mian
@@ -96,18 +93,17 @@ public class Product {
     public void setMax(int max) {
         ProductMax.set(max);
     }
-    //public void addAssociatedPart(part){
-        //add associatedPart here
-    //    
-    //}
+    public void addAssociatedPart(Part part){
+        associatedParts.add(part);
+    }
     public boolean removeAssociatedPart(int remPart){
-        //remove part
+        associatedParts.remove(remPart);
         return true;
     }
-    //public part lookupAssociatedPart(int lkPart){
-    //    //lookup the part
-    //    return 0;
-    //}
+    public Part lookupAssociatedPart(int lookPart){
+       //lookup the part
+        return associatedParts.get(lookPart);
+    }
 
  
 
