@@ -10,6 +10,7 @@ import Model.Product;
 import Model.InhousePart;
 import Model.OutsourcedPart;
 import Model.Inventory;
+import static Model.Inventory.getPartInv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -40,6 +41,8 @@ public class MainScreenController implements Initializable {
     public static int addmodpart;
     public static int addmodprod;
     @FXML
+    private TableView<Part> partTblView;
+    @FXML
     private TableColumn<Part, Integer> PartsPartIDCol;
     @FXML
     private TableColumn<Part, String> PartsPartNameCol;
@@ -55,6 +58,8 @@ public class MainScreenController implements Initializable {
     private Button PartDeleteButton;
     @FXML
     private Button PartsAddButton;
+    @FXML
+    private TableView<Product> prodTblView;
     @FXML
     private TableColumn<Product, Integer> ProdProdIDCol;
     @FXML
@@ -73,7 +78,10 @@ public class MainScreenController implements Initializable {
     private Button ProdDeleteButton;
     @FXML
     private Button ProdAddButton;
-
+    
+    public void refreshPartsTbl(){
+        
+    }
     /**
      * Initializes the controller class.
      */
@@ -87,8 +95,14 @@ public class MainScreenController implements Initializable {
         ProdNameCol.setCellValueFactory(cellData -> cellData.getValue().prodNameProp());
         ProdInventoryCol.setCellValueFactory(cellData -> cellData.getValue().prodInStockProp().asObject());
         ProdPriceCol.setCellValueFactory(cellData -> cellData.getValue().prodPriceProp().asObject());
+        updatePartsTbl();
+        //prodTblView
     }    
 
+
+    public void updatePartsTbl(){
+        partTblView.setItems(Model.Inventory.getPartInv());
+    }
     @FXML
     private void PartSearchButtonHandler(ActionEvent event) {
     }

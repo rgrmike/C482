@@ -7,6 +7,7 @@ package ViewController;
 
 import Model.Part;
 import Model.InhousePart;
+import Model.Inventory;
 import Model.OutsourcedPart;
 import java.io.IOException;
 import java.net.URL;
@@ -131,6 +132,7 @@ public class AddPartController implements Initializable {
             }
             
             if (inOrOut == false) {
+                System.out.println("Inhouse Part " + name);
                 InhousePart inhousePart = new InhousePart();
                 //when we finish inventory set this to addModPartID
                 inhousePart.setPartID(partID);
@@ -140,10 +142,10 @@ public class AddPartController implements Initializable {
                 inhousePart.setMax(max);
                 inhousePart.setMin(min);
                 inhousePart.setMachineID(Integer.parseInt(inout));
-                //Inventory.addPart(inhousePart);    
+                Inventory.addPart(inhousePart);    
             }
             if (inOrOut == true){
-                System.out.println("In House Part name: " + name);
+                System.out.println("Outsourced Part: " + name);
                 OutsourcedPart outPart = new OutsourcedPart();
                 //when we finish inventory set this to addModPartID
                 outPart.setPartID(partID);
@@ -153,7 +155,7 @@ public class AddPartController implements Initializable {
                 outPart.setMax(max);
                 outPart.setMin(min);
                 outPart.setCompanyName(inout);
-                //Inventory.addPart(outPart); 
+                Inventory.addPart(outPart); 
             }
         } catch(NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
