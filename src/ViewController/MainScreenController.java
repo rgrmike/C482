@@ -10,7 +10,7 @@ import Model.Product;
 import Model.InhousePart;
 import Model.OutsourcedPart;
 import Model.Inventory;
-import static Model.Inventory.getPartInv;
+import static Model.Inventory.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -95,14 +95,21 @@ public class MainScreenController implements Initializable {
         ProdNameCol.setCellValueFactory(cellData -> cellData.getValue().prodNameProp());
         ProdInventoryCol.setCellValueFactory(cellData -> cellData.getValue().prodInStockProp().asObject());
         ProdPriceCol.setCellValueFactory(cellData -> cellData.getValue().prodPriceProp().asObject());
+        //update the parts table when the form loads
         updatePartsTbl();
-        //prodTblView
+        //update the products table when form loads
+        updateProdTbl();
     }    
 
-
+    //grab all the parts that are stored in inventory so we can populate the table
     public void updatePartsTbl(){
-        partTblView.setItems(Model.Inventory.getPartInv());
+        partTblView.setItems(getPartInv());
     }
+    //grab products from inventory
+    public void updateProdTbl() {
+        prodTblView.setItems(getProdInv());
+    }
+    
     @FXML
     private void PartSearchButtonHandler(ActionEvent event) {
     }

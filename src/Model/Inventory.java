@@ -17,10 +17,27 @@ public class Inventory {
     
     private static ObservableList<Product> products = FXCollections.observableArrayList();
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    //initialize part and product counters
+    private static int partCounter = 0;
+    private static int productCounter = 0;
  
-    
+    //returns the entire parts list so that we can populate the tables
     public static ObservableList<Part> getPartInv() {
         return allParts;
+    }
+    //returns the entire product list so the tables can be populated
+    public static ObservableList<Product> getProdInv() {
+        return products;
+    }
+    //automatically assign an index to each part - like a db index
+    public static int getPartCoutner() {
+        partCounter++;
+        return partCounter;
+    }
+    //automaticall assign an index number to each product
+    public static int getProductCoutner() {
+        productCounter++;
+        return productCounter;
     }
     
     public static void addProduct(Product product){
@@ -44,6 +61,7 @@ public class Inventory {
     
     public static void addPart(Part part){
         allParts.add(part);
+        //debugging information to make sure parts were added when called
         System.out.println("Added Part: " + part.getName() + " to index");
         System.out.println(part);
     }

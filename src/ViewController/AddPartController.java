@@ -81,8 +81,10 @@ public class AddPartController implements Initializable {
         if(MainScreenController.addmodpart==1){
             AddPartMainLabel.setText("Add Parts");
         }
-        //addModPartID = Inventory.getPIDCt();
-        //AddPartIDField.setText(addModPartID);
+        //grab the next part ID from the inventory counter
+        addModPartID = Inventory.getPartCoutner();
+        //convert to string and set the PartID in the form
+        AddPartIDField.setText(Integer.toString(addModPartID));
     }    
     
     @FXML

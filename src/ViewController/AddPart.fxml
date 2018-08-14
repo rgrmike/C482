@@ -24,7 +24,7 @@
       <Label layoutX="50.0" layoutY="182.0" text="Max" />
       <Label layoutX="222.0" layoutY="183.0" text="Min" />
       <Label fx:id="AddPartMachineIDLabel" layoutX="50.0" layoutY="214.0" text="Machine ID" />
-      <TextField fx:id="AddPartIDField" layoutX="150.0" layoutY="60.0" promptText="Auto Gen" />
+      <TextField fx:id="AddPartIDField" editable="false" layoutX="150.0" layoutY="60.0" promptText="Auto Gen" />
       <TextField fx:id="AddPartNameField" layoutX="150.0" layoutY="90.0" promptText="Part Name" />
       <TextField fx:id="AddPartInvField" layoutX="150.0" layoutY="120.0" promptText="Inv" />
       <TextField fx:id="AddPartPriceField" layoutX="150.0" layoutY="150.0" promptText="Price/Cost" />
