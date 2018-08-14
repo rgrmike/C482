@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="548.0" prefWidth="905.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="ViewController.AddProductController">
+<AnchorPane id="AnchorPane" prefHeight="548.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewController.AddProductController">
    <children>
       <Pane layoutX="23.0" layoutY="26.0" prefHeight="506.0" prefWidth="859.0" style="-fx-border-radius: 10; -fx-border-width: 1; -fx-border-color: black;">
          <children>
@@ -30,20 +29,20 @@
             <Label layoutX="105.0" layoutY="214.0" text="Price" />
             <Label layoutX="105.0" layoutY="249.0" text="Max" />
             <Label layoutX="265.0" layoutY="249.0" text="Min" />
-            <TableView layoutX="421.0" layoutY="59.0" prefHeight="139.0" prefWidth="400.0">
+            <TableView fx:id="prodAddTbl" layoutX="421.0" layoutY="59.0" prefHeight="139.0" prefWidth="400.0">
               <columns>
-                <TableColumn prefWidth="100.0" text="Part ID" />
-                <TableColumn minWidth="100.0" prefWidth="75.0" text="Part Name" />
-                  <TableColumn minWidth="100.0" prefWidth="75.0" text="Inventory Level" />
-                  <TableColumn minWidth="100.0" prefWidth="75.0" text="Prive per Unit" />
+                <TableColumn fx:id="prodAddPartID" prefWidth="100.0" text="Part ID" />
+                <TableColumn fx:id="prodAddName" minWidth="100.0" prefWidth="75.0" text="Part Name" />
+                  <TableColumn fx:id="prodAddInv" minWidth="100.0" prefWidth="75.0" text="Inventory Level" />
+                  <TableColumn fx:id="prodAddPrice" minWidth="100.0" prefWidth="75.0" text="Price per Unit" />
               </columns>
             </TableView>
-            <TableView layoutX="421.0" layoutY="243.0" prefHeight="139.0" prefWidth="400.0">
+            <TableView fx:id="prodDelTable" layoutX="421.0" layoutY="243.0" prefHeight="139.0" prefWidth="400.0">
               <columns>
-                <TableColumn prefWidth="100.0" text="Part ID" />
-                <TableColumn prefWidth="100.0" text="Part Name" />
-                  <TableColumn prefWidth="100.0" text="Inventory Level" />
-                  <TableColumn prefWidth="100.0" text="Prive Per Unit" />
+                <TableColumn fx:id="prodDelPartID" prefWidth="100.0" text="Part ID" />
+                <TableColumn fx:id="prodDelName" prefWidth="100.0" text="Part Name" />
+                  <TableColumn fx:id="prodDelInv" prefWidth="100.0" text="Inventory Level" />
+                  <TableColumn fx:id="prodDelPrice" prefWidth="100.0" text="Price Per Unit" />
               </columns>
             </TableView>
             <TextField fx:id="AddProdSearchTextField" layoutX="673.0" layoutY="19.0" />
@@ -73,4 +72,3 @@
       </Pane>
    </children>
 </AnchorPane>
-

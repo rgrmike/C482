@@ -18,6 +18,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import static Model.Inventory.*;
+import Model.Part;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
@@ -25,7 +31,7 @@ import javafx.stage.Stage;
  * @author miken
  */
 public class AddProductController implements Initializable {
-
+    private ObservableList<Part> ourParts = FXCollections.observableArrayList();
     @FXML
     private Button AddProdSearchButton;
     @FXML
@@ -40,6 +46,26 @@ public class AddProductController implements Initializable {
     private Label AddProdMainLabel;
     @FXML
     private TextField AddProdSearchTextField;
+    @FXML
+    private TableView<Part> prodAddTbl;
+    @FXML
+    private TableColumn<Part, Integer> prodAddPartID;
+    @FXML
+    private TableColumn<Part, String> prodAddName;
+    @FXML
+    private TableColumn<Part, Integer> prodAddInv;
+    @FXML
+    private TableColumn<Part, Double> prodAddPrice;
+    @FXML
+    private TableView<Part> prodDelTable;
+    @FXML
+    private TableColumn<Part, Integer> prodDelPartID;
+    @FXML
+    private TableColumn<Part, String> prodDelName;
+    @FXML
+    private TableColumn<Part, Integer> prodDelInv;
+    @FXML
+    private TableColumn<Part, Double> prodDelPrice;
 
     /**
      * Initializes the controller class.
