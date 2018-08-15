@@ -87,6 +87,7 @@ public class MainScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //using makery style connectors
         PartsPartIDCol.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
         PartsPartNameCol.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
         PartsInventoryCol.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());

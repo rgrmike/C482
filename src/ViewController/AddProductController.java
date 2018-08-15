@@ -20,8 +20,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import static Model.Inventory.*;
 import Model.Part;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -87,14 +90,26 @@ public class AddProductController implements Initializable {
 
     @FXML
     private void AddProdAddButtonHandler(ActionEvent event) {
+        Part part = prodAddTbl.getSelectionModel().getSelectedItem();
+        ourParts.add(part);
+        //call update prodDelTable();
     }
 
     @FXML
     private void AddProdDeleteButtonHandler(ActionEvent event) {
+        Part part = prodDelTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to delete the part");
+        Optional<ButtonType> x = alert.showAndWait();
+        if (x.get() == ButtonType.OK){
+            ourParts.remove(part);
+            
+        }
     }
 
     @FXML
     private void AddProdSaveButtonHandler(ActionEvent event) throws IOException{
+        
         Stage stage; 
         Parent root;
         //get reference to the button's stage         
