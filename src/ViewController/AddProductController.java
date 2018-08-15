@@ -5,6 +5,7 @@
  */
 package ViewController;
 
+import Model.Inventory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,6 +36,7 @@ import javafx.scene.control.TableView;
  */
 public class AddProductController implements Initializable {
     private ObservableList<Part> ourParts = FXCollections.observableArrayList();
+    private int addModProdID;
     @FXML
     private Button AddProdSearchButton;
     @FXML
@@ -69,6 +71,18 @@ public class AddProductController implements Initializable {
     private TableColumn<Part, Integer> prodDelInv;
     @FXML
     private TableColumn<Part, Double> prodDelPrice;
+    @FXML
+    private TextField AddProdIDField;
+    @FXML
+    private TextField AddProdNameField;
+    @FXML
+    private TextField AddProdInvField;
+    @FXML
+    private TextField AddProdPriceField;
+    @FXML
+    private TextField AddProdMaxFieeld;
+    @FXML
+    private TextField AddProdMinField;
 
     /**
      * Initializes the controller class.
@@ -82,8 +96,28 @@ public class AddProductController implements Initializable {
         if(MainScreenController.addmodprod==1){
             AddProdMainLabel.setText("Add Product");
         }
+        prodAddPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
+        prodAddName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
+        prodAddInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
+        prodAddPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
+        prodDelPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
+        prodDelName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
+        prodDelInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
+        prodDelPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
+        updatePartsTbl();
+        updateProdTbl();
+        addModProdID = Inventory.getProductCoutner();
+        AddProdIDField.setText(Integer.toString(addModProdID));
     }    
 
+    public void updatePartsTbl(){
+        prodAddTbl.setItems(getPartInv());
+    }
+    //grab products from inventory
+    public void updateProdTbl() {
+        prodDelTable.setItems(ourParts);
+    } 
+    
     @FXML
     private void AddProdSearchButtonHandler(ActionEvent event) {
     }
@@ -124,16 +158,22 @@ public class AddProductController implements Initializable {
 
     @FXML
     private void AddProdCancelButtonHandler(ActionEvent event) throws IOException{
-        Stage stage; 
-        Parent root;
-        //get reference to the button's stage         
-        stage=(Stage) AddProdCancelButton.getScene().getWindow();
-        //load up OTHER FXML document
-        root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-        //create a new scene with root and set the stage
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to cancel?");
+        Optional<ButtonType> x = alert.showAndWait();
+
+        if (x.get() == ButtonType.OK) {
+            Stage stage; 
+            Parent root;
+            //get reference to the button's stage         
+            stage=(Stage) AddProdCancelButton.getScene().getWindow();
+            //load up OTHER FXML document
+            root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+            //create a new scene with root and set the stage
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
     
 }
