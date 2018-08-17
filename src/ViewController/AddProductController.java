@@ -150,7 +150,16 @@ public class AddProductController implements Initializable {
 
     @FXML
     private void AddProdSaveButtonHandler(ActionEvent event) throws IOException{
+        //map the contents of text boxes to variables
+        String prodName = AddProdNameField.getText();
+        String prodInventory = AddProdInvField.getText();
+        String prodPrice = AddProdPriceField.getText();
+        String prodMin = AddProdMinField.getText();
+        String prodMax = AddProdMaxFieeld.getText();
+        //try catch block to check for errors
         
+        
+        //put us back to the main screen
         Stage stage; 
         Parent root;
         //get reference to the button's stage         
