@@ -124,17 +124,24 @@ public class AddProductController implements Initializable {
 
     @FXML
     private void AddProdAddButtonHandler(ActionEvent event) {
+        //record the selected item
         Part part = prodAddTbl.getSelectionModel().getSelectedItem();
+        //add the part to the local list of parts
         ourParts.add(part);
-        //call update prodDelTable();
+        //update the bottom table with the parts
+        updateProdTbl();
     }
 
     @FXML
     private void AddProdDeleteButtonHandler(ActionEvent event) {
+        //get the selected item from the table
         Part part = prodDelTable.getSelectionModel().getSelectedItem();
+        //put up an alert pop up window asking for confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Are you sure you want to delete the part");
+        //record which button was clicked
         Optional<ButtonType> x = alert.showAndWait();
+        //if the OK button is clicked then go ahead and remove the part
         if (x.get() == ButtonType.OK){
             ourParts.remove(part);
             
@@ -158,10 +165,11 @@ public class AddProductController implements Initializable {
 
     @FXML
     private void AddProdCancelButtonHandler(ActionEvent event) throws IOException{
+        //confirm that the user wants to exit the form
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Are you sure you want to cancel?");
         Optional<ButtonType> x = alert.showAndWait();
-
+        //if the user clicks ok then go ahead and load the main screen
         if (x.get() == ButtonType.OK) {
             Stage stage; 
             Parent root;
