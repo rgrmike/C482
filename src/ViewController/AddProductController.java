@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import static Model.Inventory.*;
 import Model.Part;
+import Model.Product;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,7 @@ import javafx.scene.control.TableView;
 public class AddProductController implements Initializable {
     private ObservableList<Part> ourParts = FXCollections.observableArrayList();
     private int addModProdID;
+    private String errMsg = new String();
     @FXML
     private Button AddProdSearchButton;
     @FXML
@@ -157,7 +159,40 @@ public class AddProductController implements Initializable {
         String prodMin = AddProdMinField.getText();
         String prodMax = AddProdMaxFieeld.getText();
         //try catch block to check for errors
+        try {
+            int prodInv=Integer.parseInt(prodInventory);
+            double price=Double.parseDouble(prodPrice);
+            int max=Integer.parseInt(prodMax);
+            int min=Integer.parseInt(prodMin);
         
+            errMsg = Product.prodCheck(prodName, prodInv, price, min, max, ourParts, errMsg);
+            if (errMsg.length() > 0){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Bad Data Entry");
+                alert.setHeaderText("Error Adding Product");
+                alert.setContentText(errMsg);
+                alert.showAndWait();
+                //reset the errMsg variable for the next iteration
+                errMsg = "";
+            }
+            else{
+                Product newPrd = new Product();
+                newPrd.setProductID(addModProdID);
+                newPrd.setName(prodName);
+                newPrd.setPrice(price);
+                newPrd.setMin(min);
+                newPrd.setMax(max);
+                newPrd.addAssociatedPart((Part) ourParts);
+                Inventory.addProduct(newPrd);
+            }
+            
+        } catch(NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Number Error");
+            alert.setContentText("Please enter a valid number.");
+            alert.showAndWait();
+        } 
         
         //put us back to the main screen
         Stage stage; 
