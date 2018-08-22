@@ -5,8 +5,9 @@
  */
 package Model;
 
-import java.util.ArrayList;
+import com.sun.javafx.collections.*;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 /**
  *
@@ -14,7 +15,8 @@ import javafx.collections.ObservableList;
  */
 public class Product {
     
-    private static ArrayList<Part> associatedParts = new ArrayList<Part>();
+    //Need to make this an ObservableList so it will interact properly with the FX tableview
+    private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private final SimpleIntegerProperty ProductProductID=new SimpleIntegerProperty(0);
     private final SimpleStringProperty ProductName= new SimpleStringProperty("");
     private final SimpleDoubleProperty ProductPrice=new SimpleDoubleProperty(0.0);
@@ -74,7 +76,9 @@ public class Product {
     public int getMax(){
         return ProductMax.get();
     } 
-    
+    public ObservableList getProdParts() {
+        return associatedParts;
+    }
     // Setters
     public void setProductID(int productID) {
         ProductProductID.set(productID);
@@ -94,8 +98,8 @@ public class Product {
     public void setMax(int max) {
         ProductMax.set(max);
     }
-    public void addAssociatedPart(Part part){
-        associatedParts.add(part);
+    public void addAssociatedPart(ObservableList<Part> myParts){
+        associatedParts.addAll(myParts);
     }
     public boolean removeAssociatedPart(int remPart){
         associatedParts.remove(remPart);
@@ -106,7 +110,7 @@ public class Product {
         return associatedParts.get(lookPart);
     }
     //form input validation
-    public static String prodCheck(String name, int inventory, double price, int max, int min, ObservableList<Part> bagOParts, String errMsg) {
+    public static String prodCheck(String name, int inventory, double price, int min, int max, ObservableList<Part> bagOParts, String errMsg) {
         double partsSum = 0.00;
         //check to make sure the price of the product is greater than the sum of the parts
         for (int i = 0; i < bagOParts.size(); i++) {
@@ -136,6 +140,8 @@ public class Product {
         
         return errMsg; 
     }
+
+    
 
  
 

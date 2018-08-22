@@ -133,6 +133,59 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void PartDeleteButtonHandler(ActionEvent event) {
+        //grab the selected part
+        Part removePart = partTblView.getSelectionModel().getSelectedItem();
+        if(isPartDelOK(removePart) == true) {
+            //set the alert type as informational and tell the user why - then wait to be clicked
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Part cannot be deleted!");
+            alert.setContentText("This part is part of at least one product. Remove from products before deleting.");
+            alert.showAndWait();
+        }
+        //if the part isn't used then ask for confirmation and delete the part
+        else {
+            //put up an alert pop up window asking for confirmation
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Are you sure you want to delete the selected part?");
+            //record which button was clicked
+            Optional<ButtonType> x = alert.showAndWait();
+            //if the OK button is clicked then go ahead and remove the part
+            if (x.get() == ButtonType.OK){
+                //remove the product from Products
+                deletePart(removePart);
+                //update the local table to reflect the change
+                updatePartsTbl();
+            }
+        }
+    }
+    
+    @FXML
+    private void ProdDeleteButtonHandler(ActionEvent event) {
+        //grab the selected part
+        Product removeProd = prodTblView.getSelectionModel().getSelectedItem();
+        //check to see if the product contains at least one part - if it does we won't delete it 
+        if (isProdDelOK(removeProd) == true) {
+            //set the alert type as informational and tell the user why - then wait to be clicked
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Product cannot be deleted!");
+            alert.setContentText("Product has at least one part - remove all parts before deleting.");
+            alert.showAndWait();
+        }
+        //if the product does not have any parts than confirm that it will be deleted
+        else{
+            //put up an alert pop up window asking for confirmation
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Are you sure you want to delete the selected product?");
+            //record which button was clicked
+            Optional<ButtonType> x = alert.showAndWait();
+            //if the OK button is clicked then go ahead and remove the part
+            if (x.get() == ButtonType.OK){
+                //remove the product from Products
+                removeProduct(removeProd);
+                //update the local table to reflect the change
+                updateProdTbl();
+            }
+        }
     }
 
     @FXML
@@ -154,7 +207,17 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void MainExitHandler(ActionEvent event) {
-        System.exit(0);
+        //put up an alert pop up window asking for confirmation
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to exit?");
+        //record which button was clicked
+        Optional<ButtonType> x = alert.showAndWait();
+        //if the OK button is clicked then go ahead and remove the part
+        if (x.get() == ButtonType.OK){
+            System.exit(0);
+            
+        }
+        
     }
 
     @FXML
@@ -175,10 +238,6 @@ public class MainScreenController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    @FXML
-    private void ProdDeleteButtonHandler(ActionEvent event) {
     }
 
     @FXML

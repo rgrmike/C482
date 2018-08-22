@@ -137,16 +137,24 @@ public class AddProductController implements Initializable {
     @FXML
     private void AddProdDeleteButtonHandler(ActionEvent event) {
         //get the selected item from the table
-        Part part = prodDelTable.getSelectionModel().getSelectedItem();
-        //put up an alert pop up window asking for confirmation
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Are you sure you want to delete the part");
-        //record which button was clicked
-        Optional<ButtonType> x = alert.showAndWait();
-        //if the OK button is clicked then go ahead and remove the part
-        if (x.get() == ButtonType.OK){
-            ourParts.remove(part);
-            
+        Part removePart = prodDelTable.getSelectionModel().getSelectedItem();
+        //check to see if a part a member of a product using the isPartDelOK from Inventory
+        if (isPartDelOK(removePart) == true) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Part is used in a product and can't be delteted. ");
+            alert.showAndWait();
+        }
+        else {
+            //put up an alert pop up window asking for confirmation
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Are you sure you want to delete the part");
+            //record which button was clicked
+            Optional<ButtonType> x = alert.showAndWait();
+            //if the OK button is clicked then go ahead and remove the part
+            if (x.get() == ButtonType.OK){
+                ourParts.remove(removePart);
+
+            }
         }
     }
 
@@ -182,7 +190,8 @@ public class AddProductController implements Initializable {
                 newPrd.setPrice(price);
                 newPrd.setMin(min);
                 newPrd.setMax(max);
-                newPrd.addAssociatedPart((Part) ourParts);
+                //cast Part as local list of parts ourParts
+                newPrd.addAssociatedPart(ourParts);
                 Inventory.addProduct(newPrd);
             }
             

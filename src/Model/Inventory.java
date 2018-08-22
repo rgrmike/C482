@@ -44,7 +44,7 @@ public class Inventory {
         products.add(product);
     }
     
-    public static boolean removeProduct(int product){
+    public static boolean removeProduct(Product product){
         products.remove(product);
         //add if statement for product not found
         return true;
@@ -81,7 +81,33 @@ public class Inventory {
         allParts.set(partID, part);
     }
     
-
+    public static boolean isPartDelOK(Part thePart) {
+        //initialize a variable to hold our result
+        boolean partFinder = false;
+        //iterate through the part list
+        for (int i = 0; i < products.size(); i++){
+            if (products.get(i).getProdParts().contains(thePart)){
+                partFinder = true;
+            }
+        }
+        return partFinder;
+    }
+    
+    public static boolean isProdDelOK(Product theProduct) {
+        //check to see if a product has at least one part - if it does don't delete it
+        //initialize a var to hold the result of the check
+        boolean prodFinder = false;
+        int prodID = theProduct.getProductID();
+        //iterate through the products in a 
+        for (int i=0; i < products.size(); i++) {
+            if (products.get(i).getProductID() == prodID) {
+                if (products.get(i).getProdParts() != null) {
+                    prodFinder = true;
+                }
+            }
+        }
+        return prodFinder;
+    }
     
     
     
