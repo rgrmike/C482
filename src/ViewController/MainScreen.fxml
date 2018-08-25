@@ -24,7 +24,7 @@
             <Button fx:id="PartModifyButton" layoutX="284.0" layoutY="254.0" mnemonicParsing="false" onAction="#PartModifyButtonHandler" prefHeight="30.0" prefWidth="70.0" text="Modify" />
             <Button fx:id="PartDeleteButton" layoutX="398.0" layoutY="254.0" mnemonicParsing="false" onAction="#PartDeleteButtonHandler" prefHeight="30.0" prefWidth="70.0" text="Delete" />
             <Button fx:id="PartsAddButton" layoutX="167.0" layoutY="254.0" mnemonicParsing="false" onAction="#PartsAddButtonHandler" prefHeight="30.0" prefWidth="70.0" text="Add" />
-            <TextField layoutX="344.0" layoutY="26.0" />
+            <TextField fx:id="PartSearchBox" layoutX="344.0" layoutY="26.0" />
             <Label layoutX="14.0" layoutY="25.0" text="Parts">
                <font>
                   <Font name="Arial Black" size="18.0" />
