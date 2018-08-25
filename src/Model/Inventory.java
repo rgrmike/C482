@@ -7,6 +7,8 @@ package Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 
 /**
@@ -50,9 +52,54 @@ public class Inventory {
         return true;
     }
     
-    public static int lookupProduct(int product){
-        //stearch later - the uml calls this a product???
-        return product;
+    public static int lookupProduct(String product){
+        //create a boolean to hold if we found the item
+        boolean found = false;
+        //initialize idx to hold our return value
+        int idx = 0;
+        //use try catch to determine if a value is numeric or string
+        //if it is string then parsing as an int will fail and throw an exceptiong
+        try{
+            //check to see if we can convert an integer
+            int itemNumber=Integer.parseInt(product);
+            //if we can convert then loop through all the parts in product
+            for(int i = 0; i < products.size(); i++){
+                //if we find the product ID we want then set found to true and record the index
+                if(products.get(i).getProductID() == itemNumber){
+                    //debug message to show how the product was found
+                    System.out.println("Inventory lookupProduct found: "+ itemNumber + " using Integer search");
+                    found=true;
+                    idx = i;
+                }
+            }
+        }
+        //if parsing the string to integer fails then catch the exception
+        catch(NumberFormatException e){
+            //loop through all of the parts
+            for(int i = 0; i < products.size(); i++){
+                //check to see if the part in all upper case matches the recorded part 
+                //which is also converted to upper case
+                product = product.toUpperCase();
+                if(product.equals(products.get(i).getName().toUpperCase())){
+                    //print debug output to show how we found a match
+                    System.out.println("Inventory lookupProduct found: "+ product + " using Integer search");
+                    //set the found to true
+                    found=true;
+                    //record the index location
+                    idx = i;
+                }
+            }
+        }
+        //if we found the value return it
+        if (found==true){    
+            return idx;
+        }
+        else {
+            //debug information that we did not find the answer
+            System.out.println("Searched but Did not find any parts using Inventory lookup.");
+            //return that this is not the secret to the universe
+            return -42;
+        }
     }
     
     public static void updateProduct(int prodID, Product product){
@@ -72,9 +119,54 @@ public class Inventory {
         return true;
     }
     
-    public static int lookupPart(int part){
-        //search
-        return part;
+    public static int lookupPart(String part){
+        //create a boolean to hold if we found the item
+        boolean found = false;
+        //initialize idx to hold our return value
+        int idx = 0;
+        //use try catch to determine if a value is numeric or string
+        //if it is string then parsing as an int will fail and throw an exceptiong
+        try{
+            //check to see if we can convert an integer
+            int itemPartNumber=Integer.parseInt(part);
+            //if we can convert then loop through all the parts in product
+            for(int i = 0; i < allParts.size(); i++){
+                //if we find the product ID we want then set found to true and record the index
+                if(allParts.get(i).getPartID() == itemPartNumber){
+                    //debug message to show how the product was found
+                    System.out.println("Inventory lookupPart found: "+ itemPartNumber + " using Integer search");
+                    found=true;
+                    idx = i;
+                }
+            }
+        }
+        //if parsing the string to integer fails then catch the exception
+        catch(NumberFormatException e){
+            //loop through all of the parts
+            for(int i = 0; i < allParts.size(); i++){
+                //check to see if the part in all upper case matches the recorded part 
+                //which is also converted to upper case
+                part = part.toUpperCase();
+                if(part.equals(allParts.get(i).getName().toUpperCase())){
+                    //print debug output to show how we found a match
+                    System.out.println("Inventory lookupPart found: "+ part + " using Integer search");
+                    //set the found to true
+                    found=true;
+                    //record the index location
+                    idx = i;
+                }
+            }
+        }
+        //if we found the value return it
+        if (found==true){    
+            return idx;
+        }
+        else {
+            //debug information that we did not find the answer
+            System.out.println("Searched but Did not find any parts using Part lookup.");
+            //return that this is not the secret to the universe
+            return -42;
+        }
     }
     
     public static void updatePart(int partID, Part part){
