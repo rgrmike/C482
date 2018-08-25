@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.util.Optional;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -78,6 +79,8 @@ public class MainScreenController implements Initializable {
     private Button ProdDeleteButton;
     @FXML
     private Button ProdAddButton;
+    @FXML
+    private TextField PartSearchBox;
     
     public void refreshPartsTbl(){
         
@@ -113,6 +116,9 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private void PartSearchButtonHandler(ActionEvent event) {
+        //grab the contents of the part search box
+        String searchItem = PartSearchBox.getText();
+        
     }
 
     @FXML
