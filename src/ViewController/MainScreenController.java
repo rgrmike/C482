@@ -159,7 +159,6 @@ public class MainScreenController implements Initializable {
             //Set the products Table to show what we found in the search
             prodTblView.setItems(prodHolderBucket);
         }
-        
     }
 
     @FXML

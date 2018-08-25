@@ -122,6 +122,25 @@ public class AddProductController implements Initializable {
     
     @FXML
     private void AddProdSearchButtonHandler(ActionEvent event) {
+        //AddProdSearchTextField
+        String searchItem = AddProdSearchTextField.getText();
+        //if the search does not find anything then show a informational popup
+        if (Inventory.lookupPart(searchItem) == -42) {
+            Alert infoPop = new Alert(Alert.AlertType.INFORMATION);
+            infoPop.setContentText("The search did not find any parts.");
+            infoPop.showAndWait();
+        }
+        else {
+            //make a temp holder for the found part
+            //use lookupPart and getPartInv to populate partHolder
+            Part partHolder = Inventory.getPartInv().get(Inventory.lookupPart(searchItem));
+            //create an Observable List to hold the part we found
+            ObservableList<Part> partHolderBucket = FXCollections.observableArrayList();
+            //populate the Observable List with the parts we found
+            partHolderBucket.add(partHolder);
+            //Set the part Table to show what we found in the search
+            prodAddTbl.setItems(partHolderBucket);
+        }
     }
 
     @FXML
