@@ -81,6 +81,8 @@ public class MainScreenController implements Initializable {
     private Button ProdAddButton;
     @FXML
     private TextField PartSearchBox;
+    @FXML
+    private TextField ProdSearchBox;
     
     public void refreshPartsTbl(){
         
@@ -118,6 +120,45 @@ public class MainScreenController implements Initializable {
     private void PartSearchButtonHandler(ActionEvent event) {
         //grab the contents of the part search box
         String searchItem = PartSearchBox.getText();
+        //if the search does not find anything then show a informational popup
+        if (Inventory.lookupPart(searchItem) == -42) {
+            Alert infoPop = new Alert(Alert.AlertType.INFORMATION);
+            infoPop.setContentText("The search did not find any parts.");
+            infoPop.showAndWait();
+        }
+        else {
+            //make a temp holder for the found part
+            //use lookupPart and getPartInv to populate partHolder
+            Part partHolder = Inventory.getPartInv().get(Inventory.lookupPart(searchItem));
+            //create an Observable List to hold the part we found
+            ObservableList<Part> partHolderBucket = FXCollections.observableArrayList();
+            //populate the Observable List with the parts we found
+            partHolderBucket.add(partHolder);
+            //Set the part Table to show what we found in the search
+            partTblView.setItems(partHolderBucket);
+        }
+    }
+    
+    @FXML
+    private void ProdSearchButtonHandler(ActionEvent event) {
+        //ProdSearchBox
+        String searchItem = ProdSearchBox.getText();
+        if (Inventory.lookupProduct(searchItem) == -42) {
+            Alert infoPop = new Alert(Alert.AlertType.INFORMATION);
+            infoPop.setContentText("The search did not find any products.");
+            infoPop.showAndWait();
+        }
+        else {
+            //make a temp holder for the found Product
+            //use lookupPart and getPartInv to populate prodHolder
+            Product prodHolder = Inventory.getProdInv().get(Inventory.lookupProduct(searchItem));
+            //create an Observable List to hold the part we found
+            ObservableList<Product> prodHolderBucket = FXCollections.observableArrayList();
+            //populate the Observable List with the parts we found
+            prodHolderBucket.add(prodHolder);
+            //Set the products Table to show what we found in the search
+            prodTblView.setItems(prodHolderBucket);
+        }
         
     }
 
@@ -224,10 +265,6 @@ public class MainScreenController implements Initializable {
             
         }
         
-    }
-
-    @FXML
-    private void ProdSearchButtonHandler(ActionEvent event) {
     }
 
     @FXML
