@@ -171,6 +171,14 @@ public class MainScreenController implements Initializable {
     private void PartModifyButtonHandler(ActionEvent event) throws IOException{
         //addmodpart 2 sets the form to modify
         addmodpart=2;
+        //check to see if a part is selected and throw an error if it is not
+        if(partTblView.getSelectionModel().getSelectedItem()==null){
+            Alert infoPop = new Alert(Alert.AlertType.WARNING);
+            infoPop.setContentText("Please select a part before trying to open the Modify screen.");
+            infoPop.showAndWait();
+            return;
+            
+        }
         //get the part index location of the selected part to pass to the modify window
         modPartIdx = getPartInv().indexOf(partTblView.getSelectionModel().getSelectedItem());
         Stage stage; 

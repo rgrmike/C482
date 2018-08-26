@@ -90,8 +90,8 @@ public class AddPartController implements Initializable {
             AddPartNameField.setText(modPart.getName());
             AddPartInvField.setText(Integer.toString(modPart.getPartID()));
             AddPartPriceField.setText(Double.toString(modPart.getPrice()));
-            AddPartMaxField.setText(Integer.toString(modPart.getMin()));
-            AddPartMinField.setText(Integer.toString(modPart.getMax()));
+            AddPartMaxField.setText(Integer.toString(modPart.getMax()));
+            AddPartMinField.setText(Integer.toString(modPart.getMin()));
             //check to see if the part is inhouse or outsource and set the buttons
             //if the part is an instance of an Inhouse Part then set the form to inhouse and populate the machine ID
             if (modPart instanceof InhousePart) {
@@ -181,7 +181,12 @@ public class AddPartController implements Initializable {
                 inhousePart.setMax(max);
                 inhousePart.setMin(min);
                 inhousePart.setMachineID(Integer.parseInt(inout));
-                Inventory.addPart(inhousePart);    
+                if (MainScreenController.addmodpart==1){
+                    Inventory.addPart(inhousePart);    
+                }
+                if (MainScreenController.addmodpart==2){
+                    Inventory.updatePart(partID, inhousePart);
+                }
             }
             if (inOrOut == true){
                 System.out.println("Outsourced Part: " + name);
@@ -194,7 +199,12 @@ public class AddPartController implements Initializable {
                 outPart.setMax(max);
                 outPart.setMin(min);
                 outPart.setCompanyName(inout);
-                Inventory.addPart(outPart); 
+                if (MainScreenController.addmodpart==1){
+                    Inventory.addPart(outPart);
+                }
+                if (MainScreenController.addmodpart==2){
+                    Inventory.updatePart(partID, outPart);
+                }
             }
         } catch(NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
