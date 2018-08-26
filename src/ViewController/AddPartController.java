@@ -7,7 +7,11 @@ package ViewController;
 
 import Model.Part;
 import Model.InhousePart;
+import Model.InhousePart.*;
+import Model.OutsourcedPart;
+import Model.OutsourcedPart.*;
 import Model.Inventory;
+import static Model.Inventory.getPartInv;
 import Model.OutsourcedPart;
 import java.io.IOException;
 import java.net.URL;
@@ -74,15 +78,44 @@ public class AddPartController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // If addmodpart = 1 then add - if it = 2 then modify
+        // If addmodpart = 1 then set the form to add, if it = 2 then modify
         if(MainScreenController.addmodpart==2){
+            //set the label to modify
             AddPartMainLabel.setText("Modify Parts");
+            //based on the selected part from the main screen load the part
+            Part modPart = getPartInv().get(MainScreenController.modPartIdx);
+            //grab the parts part ID
+            addModPartID = getPartInv().get(MainScreenController.modPartIdx).getPartID();
+            //set the name, Inventory, Price, Max, and Min fields to the value of the part
+            AddPartNameField.setText(modPart.getName());
+            AddPartInvField.setText(Integer.toString(modPart.getPartID()));
+            AddPartPriceField.setText(Double.toString(modPart.getPrice()));
+            AddPartMaxField.setText(Integer.toString(modPart.getMin()));
+            AddPartMinField.setText(Integer.toString(modPart.getMax()));
+            //check to see if the part is inhouse or outsource and set the buttons
+            if (modPart instanceof InhousePart) {
+                inOrOut = false;
+                AddPartMachineIDLabel.setText("Machine ID");
+                AddPartMachineIDField.setText(Integer.toString(((InhousePart) modPart).getMachineID()));
+                AddPartInhouseRadio.setSelected(true);
+                AddPartOutsourceRadio.setSelected(false);
+            }
+            if (modPart instanceof OutsourcedPart) {
+                inOrOut = true;
+                AddPartMachineIDLabel.setText("Company Name");
+                AddPartMachineIDField.setText(((OutsourcedPart) modPart).getCompanyName());
+                AddPartInhouseRadio.setSelected(false);
+                AddPartOutsourceRadio.setSelected(true);
+            }
+            
         }
         if(MainScreenController.addmodpart==1){
+            //set the screen label to Add Parts
             AddPartMainLabel.setText("Add Parts");
+            //grab the next part ID from the inventory counter
+            addModPartID = Inventory.getPartCoutner();
+            
         }
-        //grab the next part ID from the inventory counter
-        addModPartID = Inventory.getPartCoutner();
         //convert to string and set the PartID in the form
         AddPartIDField.setText(Integer.toString(addModPartID));
     }    
@@ -105,7 +138,7 @@ public class AddPartController implements Initializable {
 
     @FXML
     private void AddPartSaveButtonHandler(ActionEvent event) throws IOException{
-        //remove partID when we finish inventory
+        //
         String textPartID=AddPartIDField.getText();
         String name=AddPartNameField.getText();
         String textInStock=AddPartInvField.getText();
@@ -136,7 +169,7 @@ public class AddPartController implements Initializable {
             if (inOrOut == false) {
                 System.out.println("Inhouse Part " + name);
                 InhousePart inhousePart = new InhousePart();
-                //when we finish inventory set this to addModPartID
+                
                 inhousePart.setPartID(partID);
                 inhousePart.setName(name);
                 inhousePart.setInStock(inStock);
@@ -149,7 +182,7 @@ public class AddPartController implements Initializable {
             if (inOrOut == true){
                 System.out.println("Outsourced Part: " + name);
                 OutsourcedPart outPart = new OutsourcedPart();
-                //when we finish inventory set this to addModPartID
+                
                 outPart.setPartID(partID);
                 outPart.setName(name);
                 outPart.setInStock(inStock);

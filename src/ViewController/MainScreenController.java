@@ -39,8 +39,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author miken
  */
 public class MainScreenController implements Initializable {
+    //variables to hold window type - add or modify
     public static int addmodpart;
     public static int addmodprod;
+    //vairable to hold the index of the part to modify
+    public static int modPartIdx;
+    //index for product modify
+    public static int modProdIdx;
+    //bind tables 
     @FXML
     private TableView<Part> partTblView;
     @FXML
@@ -165,6 +171,8 @@ public class MainScreenController implements Initializable {
     private void PartModifyButtonHandler(ActionEvent event) throws IOException{
         //addmodpart 2 sets the form to modify
         addmodpart=2;
+        //get the part index location of the selected part to pass to the modify window
+        modPartIdx = getPartInv().indexOf(partTblView.getSelectionModel().getSelectedItem());
         Stage stage; 
         Parent root;
         //get reference to the button's stage         
