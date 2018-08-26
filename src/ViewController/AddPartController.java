@@ -93,6 +93,7 @@ public class AddPartController implements Initializable {
             AddPartMaxField.setText(Integer.toString(modPart.getMin()));
             AddPartMinField.setText(Integer.toString(modPart.getMax()));
             //check to see if the part is inhouse or outsource and set the buttons
+            //if the part is an instance of an Inhouse Part then set the form to inhouse and populate the machine ID
             if (modPart instanceof InhousePart) {
                 inOrOut = false;
                 AddPartMachineIDLabel.setText("Machine ID");
@@ -100,6 +101,7 @@ public class AddPartController implements Initializable {
                 AddPartInhouseRadio.setSelected(true);
                 AddPartOutsourceRadio.setSelected(false);
             }
+            //if the part is an instance of an outsource part then set the form to oursource and populate the Company Name
             if (modPart instanceof OutsourcedPart) {
                 inOrOut = true;
                 AddPartMachineIDLabel.setText("Company Name");
@@ -122,6 +124,7 @@ public class AddPartController implements Initializable {
     
     @FXML
     private void AddPartInhouseRadioHandler(ActionEvent event) {
+        //Set the radio buttons and labels to Machine ID
         inOrOut = false;
         AddPartMachineIDLabel.setText("Machine ID");
         AddPartMachineIDField.setPromptText("Machine ID");
@@ -130,6 +133,7 @@ public class AddPartController implements Initializable {
 
     @FXML
     private void AddPartOutsourceRadioHandler(ActionEvent event) {
+        //Set the radio buttons and labels to Company Name
         inOrOut = true;
         AddPartMachineIDLabel.setText("Company Name");
         AddPartMachineIDField.setPromptText("Company Name");
