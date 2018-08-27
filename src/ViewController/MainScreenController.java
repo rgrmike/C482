@@ -175,17 +175,10 @@ public class MainScreenController implements Initializable {
             Alert infoPop = new Alert(Alert.AlertType.WARNING);
             infoPop.setContentText("Please select a part before trying to open the Modify screen.");
             infoPop.showAndWait();
-            return;
-            
+            //return back to the form so the user can correct
+            return;    
         }
-        //get the part index location of the selected part to pass to the modify window
-                
-        //get reference to the button's stage         
-        
-        //load up OTHER FXML document
-        
-        //create a new scene with root and set the stage
-        
+        //Open the AddPart form as modify part and call set part on the other end
         Stage stage; 
         Parent root;       
         stage=(Stage) PartsAddButton.getScene().getWindow();
@@ -198,7 +191,34 @@ public class MainScreenController implements Initializable {
         ViewController.AddPartController controller = loader.getController();
         Part part=partTblView.getSelectionModel().getSelectedItem();
         controller.setPart(part);
-
+    }
+    
+    @FXML
+    private void ProdModifyButtonHandler(ActionEvent event) throws IOException{
+        //addmodpart 2 sets the form to modify
+        addmodprod=2;
+        //check to see if a part is selected and throw an error if it is not
+        if(prodTblView.getSelectionModel().getSelectedItem()==null){
+            Alert infoPop = new Alert(Alert.AlertType.WARNING);
+            infoPop.setContentText("Please select a product before trying to open the Modify screen.");
+            infoPop.showAndWait();
+            //return back to the form so the user can correct
+            return;
+        }
+        Stage stage; 
+        Parent root;
+        //get reference to the button's stage         
+        stage=(Stage) PartsAddButton.getScene().getWindow();
+        //load up OTHER FXML document
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("AddProduct.fxml"));
+        root = loader.load();
+        //open up AddProduct as modify product and pass the selected product class
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        AddProductController controller = loader.getController();
+        Product product=prodTblView.getSelectionModel().getSelectedItem();
+        controller.setProduct(product);
     }
 
     @FXML
@@ -288,22 +308,6 @@ public class MainScreenController implements Initializable {
             
         }
         
-    }
-
-    @FXML
-    private void ProdModifyButtonHandler(ActionEvent event) throws IOException{
-        //addmodpart 2 sets the form to modify
-        addmodprod=2;
-        Stage stage; 
-        Parent root;
-        //get reference to the button's stage         
-        stage=(Stage) PartsAddButton.getScene().getWindow();
-        //load up OTHER FXML document
-        root = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
-        //create a new scene with root and set the stage
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML
