@@ -10,6 +10,8 @@ import Model.Product;
 import Model.InhousePart;
 import Model.OutsourcedPart;
 import Model.Inventory;
+import ViewController.AddPartController;
+import ViewController.AddProductController;
 import static Model.Inventory.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,10 +44,7 @@ public class MainScreenController implements Initializable {
     //variables to hold window type - add or modify
     public static int addmodpart;
     public static int addmodprod;
-    //vairable to hold the index of the part to modify
-    public static int modPartIdx;
-    //index for product modify
-    public static int modProdIdx;
+    
     //bind tables 
     @FXML
     private TableView<Part> partTblView;
@@ -180,17 +179,25 @@ public class MainScreenController implements Initializable {
             
         }
         //get the part index location of the selected part to pass to the modify window
-        modPartIdx = getPartInv().indexOf(partTblView.getSelectionModel().getSelectedItem());
-        Stage stage; 
-        Parent root;
+                
         //get reference to the button's stage         
+        
+        //load up OTHER FXML document
+        
+        //create a new scene with root and set the stage
+        
+        Stage stage; 
+        Parent root;       
         stage=(Stage) PartsAddButton.getScene().getWindow();
         //load up OTHER FXML document
-        root = FXMLLoader.load(getClass().getResource("AddPart.fxml"));
-        //create a new scene with root and set the stage
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("AddPart.fxml"));
+        root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ViewController.AddPartController controller = loader.getController();
+        Part part=partTblView.getSelectionModel().getSelectedItem();
+        controller.setPart(part);
 
     }
 

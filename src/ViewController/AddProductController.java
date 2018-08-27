@@ -36,7 +36,9 @@ import javafx.scene.control.TableView;
  * @author miken
  */
 public class AddProductController implements Initializable {
+    //create a local observable list of parts to show what parts make up our product
     private ObservableList<Part> ourParts = FXCollections.observableArrayList();
+    //local variable to hold the product ID
     private int addModProdID;
     private String errMsg = new String();
     @FXML
@@ -97,21 +99,26 @@ public class AddProductController implements Initializable {
         }
         if(MainScreenController.addmodprod==1){
             AddProdMainLabel.setText("Add Product");
+            //initialize tables
+            prodAddPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
+            prodAddName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
+            prodAddInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
+            prodAddPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
+            prodDelPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
+            prodDelName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
+            prodDelInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
+            prodDelPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
+            //update the parts table
+            updatePartsTbl();
+            //update the products table
+            updateProdTbl();
+            //grab the inventory counter
+            addModProdID = Inventory.getProductCoutner();
+            //set the product ID field to the next unused counter
+            AddProdIDField.setText(Integer.toString(addModProdID));
         }
-        prodAddPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
-        prodAddName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
-        prodAddInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
-        prodAddPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
-        prodDelPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
-        prodDelName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
-        prodDelInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
-        prodDelPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
-        updatePartsTbl();
-        updateProdTbl();
-        addModProdID = Inventory.getProductCoutner();
-        AddProdIDField.setText(Integer.toString(addModProdID));
     }    
-
+    
     public void updatePartsTbl(){
         prodAddTbl.setItems(getPartInv());
     }
@@ -173,7 +180,6 @@ public class AddProductController implements Initializable {
             //if the OK button is clicked then go ahead and remove the part
             if (x.get() == ButtonType.OK){
                 ourParts.remove(removePart);
-
             }
         }
     }
@@ -188,11 +194,12 @@ public class AddProductController implements Initializable {
         String prodMax = AddProdMaxFieeld.getText();
         //try catch block to check for errors
         try {
+            //parse the contents of strings to Int and double
             int prodInv=Integer.parseInt(prodInventory);
             double price=Double.parseDouble(prodPrice);
             int max=Integer.parseInt(prodMax);
             int min=Integer.parseInt(prodMin);
-        
+            //prodCheck validates the input
             errMsg = Product.prodCheck(prodName, prodInv, price, min, max, ourParts, errMsg);
             if (errMsg.length() > 0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -202,9 +209,11 @@ public class AddProductController implements Initializable {
                 alert.showAndWait();
                 //reset the errMsg variable for the next iteration
                 errMsg = "";
+                //return back to the form so the user can fix the error
                 return;
             }
             else{
+                //make a temp product class to hold values
                 Product newPrd = new Product();
                 newPrd.setProductID(addModProdID);
                 newPrd.setName(prodName);
@@ -213,15 +222,22 @@ public class AddProductController implements Initializable {
                 newPrd.setMax(max);
                 //cast Part as local list of parts ourParts
                 newPrd.addAssociatedPart(ourParts);
-                Inventory.addProduct(newPrd);
+                //check to see if we are adding
+                if(MainScreenController.addmodprod==1){
+                    Inventory.addProduct(newPrd);
+                }
+                //or modifying a part
+                if(MainScreenController.addmodprod==2){
+                    Inventory.updateProduct(addModProdID, newPrd);
+                }
             }
             
         } catch(NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText("Number Error");
+            //Throw an error if convert to integer and double fail
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Please enter a valid number.");
             alert.showAndWait();
+            //return back to the form so the user can correct
             return;
         } 
         
@@ -257,6 +273,31 @@ public class AddProductController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+    }
+    public void setProduct(Product product){
+        //set the local product ID field so that our update function works
+        addModProdID = product.getProductID();
+        //set all of the local data fields
+        AddProdIDField.setText(Integer.toString(addModProdID));
+        AddProdNameField.setText(product.getName());
+        AddProdInvField.setText(Integer.toString(product.getInStock()));
+        AddProdPriceField.setText(Double.toString(product.getPrice()));
+        AddProdMaxFieeld.setText(Integer.toString(product.getMax()));
+        AddProdMinField.setText(Integer.toString(product.getMin()));
+        //set the local parts list to the product parts
+        ourParts = product.getProdParts();
+        prodAddPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
+        prodAddName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
+        prodAddInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
+        prodAddPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
+        prodDelPartID.setCellValueFactory(cellData -> cellData.getValue().pIDProp().asObject());
+        prodDelName.setCellValueFactory(cellData -> cellData.getValue().partNameProp());
+        prodDelInv.setCellValueFactory(cellData -> cellData.getValue().partInStockProp().asObject());
+        prodDelPrice.setCellValueFactory(cellData -> cellData.getValue().partPriceProp().asObject());
+        //update the parts table
+        updatePartsTbl();
+        //update the products table
+        updateProdTbl();
     }
     
 }
