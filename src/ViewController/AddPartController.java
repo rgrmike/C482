@@ -28,7 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -71,6 +70,7 @@ public class AddPartController implements Initializable {
     private String errMsg = new String();
     private boolean inOrOut;
     private int addModPartID;
+    private int modifyPartIndex;
     
 
     /**
@@ -83,15 +83,18 @@ public class AddPartController implements Initializable {
             //set the label to modify
             AddPartMainLabel.setText("Modify Parts");
             //based on the selected part from the main screen load the part
-            Part modPart = getPartInv().get(MainScreenController.modPartIdx);
+            modifyPartIndex = MainScreenController.modPartIdx;
+            Part modPart = getPartInv().get(modifyPartIndex);
             //grab the parts part ID
-            addModPartID = getPartInv().get(MainScreenController.modPartIdx).getPartID();
+            addModPartID = getPartInv().get(modifyPartIndex).getPartID();
             //set the name, Inventory, Price, Max, and Min fields to the value of the part
             AddPartNameField.setText(modPart.getName());
             AddPartInvField.setText(Integer.toString(modPart.getPartID()));
             AddPartPriceField.setText(Double.toString(modPart.getPrice()));
             AddPartMaxField.setText(Integer.toString(modPart.getMax()));
             AddPartMinField.setText(Integer.toString(modPart.getMin()));
+            //debug message
+            System.out.println("Initialized form as modify with part " + modPart);
             //check to see if the part is inhouse or outsource and set the buttons
             //if the part is an instance of an Inhouse Part then set the form to inhouse and populate the machine ID
             if (modPart instanceof InhousePart) {
@@ -168,9 +171,11 @@ public class AddPartController implements Initializable {
                 alert.showAndWait();
                 //reset the errMsg variable for the next iteration
                 errMsg = "";
+                return;
             }
-            
+            //check for inhousepart
             if (inOrOut == false) {
+                //debug message to show that we picked the inhouse part
                 System.out.println("Inhouse Part " + name);
                 InhousePart inhousePart = new InhousePart();
                 
@@ -181,14 +186,17 @@ public class AddPartController implements Initializable {
                 inhousePart.setMax(max);
                 inhousePart.setMin(min);
                 inhousePart.setMachineID(Integer.parseInt(inout));
+                //check to see if we are adding a new part or modyfing
                 if (MainScreenController.addmodpart==1){
                     Inventory.addPart(inhousePart);    
                 }
                 if (MainScreenController.addmodpart==2){
-                    Inventory.updatePart(partID, inhousePart);
+                    Inventory.updatePart(modifyPartIndex, inhousePart);
                 }
             }
+            //check for outsourced part
             if (inOrOut == true){
+                //debug message to show that we properly picked outsource part
                 System.out.println("Outsourced Part: " + name);
                 OutsourcedPart outPart = new OutsourcedPart();
                 
@@ -199,19 +207,20 @@ public class AddPartController implements Initializable {
                 outPart.setMax(max);
                 outPart.setMin(min);
                 outPart.setCompanyName(inout);
+                //check to see if we are adding a new part or modifying
                 if (MainScreenController.addmodpart==1){
                     Inventory.addPart(outPart);
                 }
                 if (MainScreenController.addmodpart==2){
-                    Inventory.updatePart(partID, outPart);
+                    Inventory.updatePart(modifyPartIndex, outPart);
                 }
             }
+        //catch a number format error and pop up an error message
         } catch(NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText("Number Error");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Please enter a valid number.");
             alert.showAndWait();
+            return;
         }        
         
         Stage stage; 

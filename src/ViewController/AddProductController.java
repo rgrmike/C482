@@ -162,6 +162,7 @@ public class AddProductController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Part is used in a product and can't be delteted. ");
             alert.showAndWait();
+            return;
         }
         else {
             //put up an alert pop up window asking for confirmation
@@ -201,6 +202,7 @@ public class AddProductController implements Initializable {
                 alert.showAndWait();
                 //reset the errMsg variable for the next iteration
                 errMsg = "";
+                return;
             }
             else{
                 Product newPrd = new Product();
@@ -220,6 +222,7 @@ public class AddProductController implements Initializable {
             alert.setHeaderText("Number Error");
             alert.setContentText("Please enter a valid number.");
             alert.showAndWait();
+            return;
         } 
         
         //put us back to the main screen
