@@ -169,8 +169,8 @@ public class Inventory {
         }
     }
     
-    public static void updatePart(int partID, Part part){
-        allParts.set(partID, part);
+    public static void updatePart(int index, Part part){
+        allParts.set(index, part);
     }
     
     public static boolean isPartDelOK(Part thePart) {
