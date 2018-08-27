@@ -99,7 +99,7 @@ public class Product {
         ProductMax.set(max);
     }
     public void addAssociatedPart(ObservableList<Part> myParts){
-        associatedParts.addAll(myParts);
+        associatedParts.setAll(myParts);
     }
     public boolean removeAssociatedPart(int remPart){
         associatedParts.remove(remPart);

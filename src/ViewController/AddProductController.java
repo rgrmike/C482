@@ -40,6 +40,7 @@ public class AddProductController implements Initializable {
     private ObservableList<Part> ourParts = FXCollections.observableArrayList();
     //local variable to hold the product ID
     private int addModProdID;
+    private int addModProdIDX;
     private String errMsg = new String();
     @FXML
     private Button AddProdSearchButton;
@@ -164,23 +165,14 @@ public class AddProductController implements Initializable {
     private void AddProdDeleteButtonHandler(ActionEvent event) {
         //get the selected item from the table
         Part removePart = prodDelTable.getSelectionModel().getSelectedItem();
-        //check to see if a part a member of a product using the isPartDelOK from Inventory
-        if (isPartDelOK(removePart) == true) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Part is used in a product and can't be delteted. ");
-            alert.showAndWait();
-            return;
-        }
-        else {
-            //put up an alert pop up window asking for confirmation
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Are you sure you want to delete the part");
-            //record which button was clicked
-            Optional<ButtonType> x = alert.showAndWait();
-            //if the OK button is clicked then go ahead and remove the part
-            if (x.get() == ButtonType.OK){
-                ourParts.remove(removePart);
-            }
+        //put up an alert pop up window asking for confirmation
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to delete the part");
+        //record which button was clicked
+        Optional<ButtonType> x = alert.showAndWait();
+        //if the OK button is clicked then go ahead and remove the part
+        if (x.get() == ButtonType.OK){
+            ourParts.remove(removePart);
         }
     }
 
@@ -216,19 +208,20 @@ public class AddProductController implements Initializable {
                 //make a temp product class to hold values
                 Product newPrd = new Product();
                 newPrd.setProductID(addModProdID);
+                newPrd.setInStock(prodInv);
                 newPrd.setName(prodName);
                 newPrd.setPrice(price);
                 newPrd.setMin(min);
                 newPrd.setMax(max);
-                //cast Part as local list of parts ourParts
                 newPrd.addAssociatedPart(ourParts);
                 //check to see if we are adding
                 if(MainScreenController.addmodprod==1){
+                    //cast Part as local list of parts ourParts
                     Inventory.addProduct(newPrd);
                 }
                 //or modifying a part
                 if(MainScreenController.addmodprod==2){
-                    Inventory.updateProduct(addModProdID, newPrd);
+                    Inventory.updateProduct(addModProdIDX, newPrd);
                 }
             }
             
@@ -277,6 +270,7 @@ public class AddProductController implements Initializable {
     public void setProduct(Product product){
         //set the local product ID field so that our update function works
         addModProdID = product.getProductID();
+        addModProdIDX = getProdInv().indexOf(product);
         //set all of the local data fields
         AddProdIDField.setText(Integer.toString(addModProdID));
         AddProdNameField.setText(product.getName());

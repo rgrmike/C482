@@ -102,8 +102,8 @@ public class Inventory {
         }
     }
     
-    public static void updateProduct(int prodID, Product product){
-        products.set(prodID, product);
+    public static void updateProduct(int prodIDX, Product product){
+        products.set(prodIDX, product);
     }
     
     public static void addPart(Part part){
